@@ -1,5 +1,4 @@
 from modules import *
-
 from tika import parser
 import spacy
 import csv
@@ -32,14 +31,25 @@ for sent in tokenizer.tokenize(data):
     fcsv.write("\n")
 
 #reading from csv
-sentences = pd.read_csv("sent.csv", sep= "\n", header=None)
-sentences.shape
-# print(sentences.sample(5))
+sentences = pd.read_csv("sent.csv", sep= "\n", header=None, skip_blank_lines=True)
+sentences[0].shape
+
 
 
 #
-# doc = nlp("The success of an emergency landing is as much a matter of the mind as of skills.")
+
+
+# #
+# doc = nlp("The failure indications of EFIS may be entirely different from conventional instruments making recognition of system malfunction much more difficult for the pilot.")
 # for tok in doc:
 #   print(tok.text, "...", tok.dep_)
+# exit(0)
 
-print(get_entities("The success of an emergency landing is as much a matter of the mind as of skills."))
+
+sub_obj = []
+print(len(sentences[0]))
+for i in tqdm(sentences[0]):
+    sub_obj.append(entity_pair(i))
+
+rel = [get_relation(i) for i in tqdm(sentences[0])]
+print(pd.Series(rel).value_counts()[:50])
