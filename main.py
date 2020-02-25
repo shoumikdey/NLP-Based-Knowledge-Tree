@@ -25,13 +25,15 @@ tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
 data = parsedPDF['content']
 fcsv = open('sent.csv', 'w')
+writer = csv.writer(fcsv, delimiter="\t")
 for sent in tokenizer.tokenize(data):
-    #print(" ".join(sent.split()))
-    fcsv.write(" ".join(sent.split()))
-    fcsv.write("\n")
+    print(" ".join(sent.split()))
+#     fcsv.write(" ".join(sent.split()))
+#     fcsv.write("\n")
 
+    writer.writerow([" ".join(sent.split())])
 #reading from csv
-sentences = pd.read_csv("sent.csv", sep= "\n", header=None, skip_blank_lines=True)
+sentences = pd.read_csv("sent.csv", sep= "\t", header=None, skip_blank_lines=True)
 sentences[0].shape
 
 
@@ -57,7 +59,9 @@ src = [i[0] for i in sub_obj]
 target = [i[1] for i in sub_obj]
 
 kg_df = pd.DataFrame({'source':src, 'target':target, 'edge':rel})
-kg_df = kg_df[kg_df['edge']=="landing"]
+print(kg_df)
+exit()
+kg_df = kg_df[kg_df['edge']=="EFIS"]
 G = nx.from_pandas_edgelist(kg_df, "source", "target", edge_attr=True, create_using=nx.MultiDiGraph())
 
 plt.figure(figsize=(12,12))

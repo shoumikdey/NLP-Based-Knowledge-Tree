@@ -66,7 +66,14 @@ def get_relation(sent):
                 {'DEP':'prep','OP':"?"},
                 {'DEP':'agent','OP':"?"},
                 {'POS':'ADJ','OP':"?"}]
-
+    # pattern = [{'DEP':'nummod','OP':"?"},
+    #        {'DEP':'amod','OP':"?"},
+    #        {'POS':'NOUN'},
+    #        {'IS_PUNCT':True},
+    #        {'LOWER': 'especially'},
+    #        {'DEP':'nummod','OP':"?"},
+    #        {'DEP':'amod','OP':"?"},
+    #        {'POS':'NOUN'}]
     matcher.add("matching_1", None, pattern)
 
     matches = matcher(doc)
