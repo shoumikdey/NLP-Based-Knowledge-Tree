@@ -3,6 +3,20 @@ import spacy
 import csv
 import nltk.data
 import re
+import pandas as pd
+import bs4
+import requests
+from spacy import displacy
+nlp = spacy.load('en_core_web_sm')
+
+from spacy.matcher import Matcher
+from spacy.tokens import Span
+
+import networkx as nx
+
+import matplotlib.pyplot as plt
+from tqdm import tqdm
+pd.set_option('display.max_colwidth', 200)
 
 parsedPDF = parser.from_file("FAA_Emergency_Procedures.pdf")
 
@@ -15,12 +29,10 @@ for sent in tokenizer.tokenize(data):
     print(" ".join(sent.split()))
     fcsv.write(" ".join(sent.split()))
     fcsv.write("\n")
-    # writer.writerow('')
-    #writer.writerow("Hello")
 
 
 
-nlp = spacy.load('en_core_web_sm')
+
 doc = nlp(parsedPDF['content'])
 # for tok in doc:
   #print(tok.text, "...", tok.dep_)
