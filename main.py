@@ -52,4 +52,15 @@ for i in tqdm(sentences[0]):
     sub_obj.append(entity_pair(i))
 
 rel = [get_relation(i) for i in tqdm(sentences[0])]
-print(pd.Series(rel).value_counts()[:50])
+
+src = [i[0] for i in sub_obj]
+target = [i[1] for i in sub_obj]
+
+kg_df = pd.DataFrame({'source':src, 'target':target, 'edge':rel})
+kg_df = kg_df[kg_df['edge']=="landing"]
+G = nx.from_pandas_edgelist(kg_df, "source", "target", edge_attr=True, create_using=nx.MultiDiGraph())
+
+plt.figure(figsize=(12,12))
+pos = nx.spring_layout(G)
+nx.draw(G, with_labels=True, node_color='skyblue', edge_cmap=plt.cm.Blues, pos=pos)
+plt.show()
