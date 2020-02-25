@@ -4,53 +4,40 @@ from spacy.matcher import Matcher
 from spacy.tokens import Span
 
 def entity_pair(sent):
-  ## chunk 1
   ent1 = ""
   ent2 = ""
 
-  prv_tok_dep = ""    # dependency tag of previous token in the sentence
-  prv_tok_text = ""   # previous token in the sentence
+  prv_token_dep = ""    
+  prv_token_text = ""
 
   prefix = ""
   modifier = ""
 
-  #############################################################
 
-  for tok in nlp(sent):
-    ## chunk 2
-    # if token is a punctuation mark then move on to the next token
-    if tok.dep_ != "punct":
-      # check: token is a compound word or not
-      if tok.dep_ == "compound":
-        prefix = tok.text
-        # if the previous word was also a 'compound' then add the current word to it
-        if prv_tok_dep == "compound":
-          prefix = prv_tok_text + " "+ tok.text
+  for token in nlp(sent):
+    if token.dep_ != "punct":
+      if token.dep_ == "compound":
+        prefix = token.text
+        if prv_token_dep == "compound":
+          prefix = prv_token_text + " "+ token.text
 
-      # check: token is a modifier or not
-      if tok.dep_.endswith("mod") == True:
-        modifier = tok.text
-        # if the previous word was also a 'compound' then add the current word to it
-        if prv_tok_dep == "compound":
-          modifier = prv_tok_text + " "+ tok.text
+      if token.dep_.endswith("mod") == True:
+        modifier = token.text
+        if prv_token_dep == "compound":
+          modifier = prv_token_text + " "+ token.text
 
-      ## chunk 3
-      if tok.dep_.find("subj") == True:
-        ent1 = modifier +" "+ prefix + " "+ tok.text
+      if token.dep_.find("subj") == True:
+        ent1 = modifier +" "+ prefix + " "+ token.text
         prefix = ""
         modifier = ""
-        prv_tok_dep = ""
-        prv_tok_text = ""
+        prv_token_dep = ""
+        prv_token_text = ""
 
-      ## chunk 4
-      if tok.dep_.find("obj") == True:
-        ent2 = modifier +" "+ prefix +" "+ tok.text
+      if token.dep_.find("obj") == True:
+        ent2 = modifier +" "+ prefix +" "+ token.text
 
-      ## chunk 5
-      # update variables
-      prv_tok_dep = tok.dep_
-      prv_tok_text = tok.text
-  #############################################################
+      prv_token_dep = token.dep_
+      prv_token_text = token.text
 
   return [ent1.strip(), ent2.strip()]
 
@@ -58,10 +45,8 @@ def entity_pair(sent):
 def get_relation(sent):
     doc = nlp(sent)
 
-    # Matcher class object
     matcher = Matcher(nlp.vocab)
 
-    #define the pattern
     pattern = [{'DEP':'ROOT'},
                 {'DEP':'prep','OP':"?"},
                 {'DEP':'agent','OP':"?"},
