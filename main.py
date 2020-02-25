@@ -24,15 +24,17 @@ tokenizer = nltk.data.load('tokenizers/punkt/english.pickle')
 
 data = parsedPDF['content']
 fcsv = open('sent.csv', 'w')
-writer = csv.writer(fcsv, delimiter=',')
 for sent in tokenizer.tokenize(data):
-    print(" ".join(sent.split()))
+    #print(" ".join(sent.split()))
     fcsv.write(" ".join(sent.split()))
     fcsv.write("\n")
 
+#reading from csv
+sentences = pd.read_csv("sent.csv", sep= "\n", header=None)
+sentences.shape
 
 
 
-doc = nlp(parsedPDF['content'])
-# for tok in doc:
-  #print(tok.text, "...", tok.dep_)
+doc = nlp("The success of an emergency landing is as much a matter of the mind as of skills.")
+for tok in doc:
+  print(tok.text, "...", tok.dep_)
