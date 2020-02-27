@@ -4,7 +4,7 @@ from spacy.matcher import Matcher, PhraseMatcher
 from spacy.tokens import Span
 
 def phrase_template():
-    phrases = ["emergency", "non-normal", " Federal Aviation Administration", "Handbook", "emergency landings",
+    phrases = ["emergency", "non-normal", " Federal Aviation Administration", "FAA", "Handbook", "emergency landings",
                 "engine", "emergency landing", "forced landing", "precautionary landing", "ditching", "fire",
                 "sink rate", "sink rate control", "attitude", "terrain selection", "safety concepts", "configuration",
                 "approach", "terrain types", "terrain", "confined areas", "trees", "forest", "water", "snow", "after takeoff",
@@ -13,7 +13,11 @@ def phrase_template():
                 "malfunction", "flight control malfunction", "flight control malfunctions", "flight control", "total flap failure", "total flaps failure",
                 "loss", "loss of elevator control", "elevator", "elevator control", "gear", "landing gear", "landing gear malfunction", "gears", "systems malfunction", "systems malfunctions",
                 "electrical", "electrical system", "pitot", "pitot-static", "pitot tube", "blocked", "blockage", "pitot-static system", "instrument operation", "pressure", "pressure chamber",
-                "stall", "speed", "vertical speed", "door", "door opening in-flight", "door opeining", "loss", "loss of rpm", "loss of manifold pressure", "gain of manifold pressure", "high oil temperature"]
+                "stall", "speed", "vertical speed", "door", "door opening in-flight", "door opeining", "loss", "loss of rpm", "rpm", "loss of manifold pressure", "gain of manifold pressure", "high oil temperature",
+                "Inadvertent VFR Flight into IMC", "VFR Flight",  "VFR", "control", "maintaining", "airplane control", "maintaining airplane control",
+                "attitude", "attitude indicator", "attitude control", "turns", "spiral", "graveyard spiral", "instabaility", "steep", "banks", "steep banks", "climbs", "descents", "maneuvers", "visual flight",
+                "extend", "retract", "extension", "retraction", "non-instrument-rated", "pilot", "psychological hazards", "nose", "flying speed", "landing area", "throttle", "runway", "minimum", "touchdown", "glide",
+                ]
     return phrases
 
 
