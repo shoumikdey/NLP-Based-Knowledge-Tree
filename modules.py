@@ -1,13 +1,19 @@
 import spacy
 nlp = spacy.load('en_core_web_sm')
-from spacy.matcher import Matcher
+from spacy.matcher import Matcher, PhraseMatcher
 from spacy.tokens import Span
+
+def phrase_template():
+    phrases = ["emergency", "non-normal", " Federal Aviation Administration", "Handbook", "emergency landings",
+                "engine"]
+    return phrases
+
 
 def entity_pair(sent):
   ent1 = ""
   ent2 = ""
 
-  prv_token_dep = ""    
+  prv_token_dep = ""
   prv_token_text = ""
 
   prefix = ""
@@ -45,12 +51,15 @@ def entity_pair(sent):
 def get_relation(sent):
     doc = nlp(sent)
 
-    matcher = Matcher(nlp.vocab)
+    # matcher = Matcher(nlp.vocab)
+    #
+    # pattern = [{'DEP':'ROOT'},
+    #             {'DEP':'prep','OP':"?"},
+    #             {'DEP':'agent','OP':"?"},
+    #             {'POS':'ADJ','OP':"?"}]
 
-    pattern = [{'DEP':'ROOT'},
-                {'DEP':'prep','OP':"?"},
-                {'DEP':'agent','OP':"?"},
-                {'POS':'ADJ','OP':"?"}]
+    matcher = PhraseMatcher(nlp.vocab)
+    pattern = list(nlp.tokenizer.pipe(phrase_template()))
     # pattern = [{'DEP':'nummod','OP':"?"},
     #        {'DEP':'amod','OP':"?"},
     #        {'POS':'NOUN'},
@@ -59,10 +68,17 @@ def get_relation(sent):
     #        {'DEP':'nummod','OP':"?"},
     #        {'DEP':'amod','OP':"?"},
     #        {'POS':'NOUN'}]
-    matcher.add("matching_1", None, pattern)
+    matcher.add("matching_1", None, *pattern)
 
     matches = matcher(doc)
     k = len(matches) - 1
+    #
+    #
+    # print(len(matches))
+    #span = doc[matches[0][1]:matches[0][2]]
+    span = doc
+    for match_id, start, end in matches:
+        span = doc[start:end]
+        #print(type(span))
 
-    span = doc[matches[k][1]:matches[k][2]]
     return(span.text)

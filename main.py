@@ -49,19 +49,18 @@ sentences[0].shape
 
 
 sub_obj = []
-print(len(sentences[0]))
 for i in tqdm(sentences[0]):
     sub_obj.append(entity_pair(i))
 
 rel = [get_relation(i) for i in tqdm(sentences[0])]
-print(pd.Series(rel).value_counts()[:])
+#print(pd.Series(rel).value_counts()[:])
 
 src = [i[0] for i in sub_obj]
 target = [i[1] for i in sub_obj]
 
 kg_df = pd.DataFrame({'source':src, 'target':target, 'edge':rel})
-kg_df = kg_df[kg_df['edge']=="Land"]
-print(kg_df)
+kg_df = kg_df[kg_df['edge']=="engine"]
+print(rel)
 G = nx.from_pandas_edgelist(kg_df, "source", "target", edge_attr=True, create_using=nx.MultiDiGraph())
 
 plt.figure(figsize=(12,12))
