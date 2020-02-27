@@ -5,7 +5,15 @@ from spacy.tokens import Span
 
 def phrase_template():
     phrases = ["emergency", "non-normal", " Federal Aviation Administration", "Handbook", "emergency landings",
-                "engine"]
+                "engine", "emergency landing", "forced landing", "precautionary landing", "ditching", "fire",
+                "sink rate", "sink rate control", "attitude", "terrain selection", "safety concepts", "configuration",
+                "approach", "terrain types", "terrain", "confined areas", "trees", "forest", "water", "snow", "after takeoff",
+                "engine failure after takeoff", "single engine", "single-engine", "emergency descents", "in-flight", "in-flight fire",
+                "engine fire", "electrical fire", "electrical fires", "cabin fire", "asymmetric", "split", "asymmetric flap", "asymmetric (split) flap", "flap", "flaps",
+                "malfunction", "flight control malfunction", "flight control malfunctions", "flight control", "total flap failure", "total flaps failure",
+                "loss", "loss of elevator control", "elevator", "elevator control", "gear", "landing gear", "landing gear malfunction", "gears", "systems malfunction", "systems malfunctions",
+                "electrical", "electrical system", "pitot", "pitot-static", "pitot tube", "blocked", "blockage", "pitot-static system", "instrument operation", "pressure", "pressure chamber",
+                "stall", "speed", "vertical speed", "door", "door opening in-flight", "door opeining", "loss", "loss of rpm", "loss of manifold pressure", "gain of manifold pressure", "high oil temperature"]
     return phrases
 
 
