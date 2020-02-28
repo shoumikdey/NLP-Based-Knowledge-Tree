@@ -1,0 +1,7 @@
+nltk==3.4.5
+tika==1.23.1
+matplotlib==2.1.1
+spacy==2.2.3
+networkx==2.4
+pandas==0.22.0
+tqdm==4.43.0
