@@ -7,6 +7,12 @@ from nltk.corpus import stopwords
 import pandas as pd
 
 def phrase_template():
+    '''
+    This function returns a list of all the possible technical terms that has high possibility of having several occurances in FAA handbooks and manuals,
+    or in manuals pertaining to aircraft procedures and emergency procedures.
+
+    This list is required to use the Phrase Matcher algoritm of matching the relations.
+    '''
     phrases = ["emergency", "non-normal", " Federal Aviation Administration", "FAA", "Handbook", "emergency landings",
                 "engine", "emergency landing", "forced landing", "precautionary landing", "ditching", "fire",
                 "sink rate", "sink rate control", "attitude", "terrain selection", "safety concepts", "configuration",
@@ -26,6 +32,10 @@ def phrase_template():
 
 
 def entity_pair(sent):
+
+    '''
+    The subject and the object is extracted from the sentence passed into the function.
+    '''
   ent1 = ""
   ent2 = ""
 
@@ -65,6 +75,9 @@ def entity_pair(sent):
 
 
 def get_relation(sent):
+    '''
+    Relations are identified and matched in each sentence
+    '''
     doc = nlp(sent)
 
     matcher = PhraseMatcher(nlp.vocab)
@@ -83,6 +96,9 @@ def get_relation(sent):
     return(span.text)
 
 def cleanup_text(docs, logging=False):
+    '''
+    The text loaded from the PDF is cleaned and lemmatized. Entities such as Punctuations, stop words, pronouns etc are removed
+    '''
     texts = []
     counter = 1
 
