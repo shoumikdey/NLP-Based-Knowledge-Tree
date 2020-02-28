@@ -38,15 +38,20 @@ def main():
     print("Reading", file[0])
     for i in tqdm(sentences[0]):
         sub_obj.append(entity_pair(i))
+    print()
     print("Extracting relation and creating knowledge graph")
     rel = [get_relation(i) for i in tqdm(sentences[0])]
-    #print(pd.Series(rel).value_counts()[:])
 
     src = [i[0] for i in sub_obj]
     target = [i[1] for i in sub_obj]
 
     kg_df = pd.DataFrame({'source':src, 'target':target, 'edge':rel})
-    kg_df = kg_df[kg_df['edge']=="engine"]
+    print()
+    print("Enter the name of the system")
+    print("Example inputs: 'engine', 'fire', 'flap', 'electrical', 'fuel', 'gear'")
+    inp = input("just press enter to display the full graph: ")
+    if inp != "":
+        kg_df = kg_df[kg_df['edge']==str(inp)]
     print(kg_df)
     G = nx.from_pandas_edgelist(kg_df, "source", "target", edge_attr=True, create_using=nx.MultiDiGraph())
 

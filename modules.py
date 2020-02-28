@@ -21,7 +21,7 @@ def phrase_template():
                 "attitude", "attitude indicator", "attitude control", "turns", "spiral", "graveyard spiral", "instabaility", "steep", "banks", "steep banks", "climbs", "descents", "maneuvers", "visual flight",
                 "extend", "retract", "extension", "retraction", "non-instrument-rated", "pilot", "psychological hazards", "nose", "flying speed", "landing area", "throttle", "runway", "minimum", "touchdown", "glide",
                 "damage", "groundspeed", "wind", "deceleration", "hydraulics", "hydraulic", "door", "opening", "spiral", "descent", "EFIS", "avionics", "IFR", "propellor", "thrust", "oil temperature", "oil pressure", "fuel pressure",
-                "displays", "flight display", "cowl", "stall", "stall warning", "stall warning horn", "engines"]
+                "displays", "flight display", "cowl", "stall", "stall warning", "stall warning horn", "engines", "fuel", "fuel leak", "fuel shortage", "fuel tank", "fuel supply", "fuel selector", ]
     return phrases
 
 
@@ -29,8 +29,8 @@ def entity_pair(sent):
   ent1 = ""
   ent2 = ""
 
-  prv_token_dep = ""
-  prv_token_text = ""
+  prev_token_dep = ""
+  prev_token_text = ""
 
   prefix = ""
   modifier = ""
@@ -40,26 +40,26 @@ def entity_pair(sent):
     if token.dep_ != "punct":
       if token.dep_ == "compound":
         prefix = token.text
-        if prv_token_dep == "compound":
-          prefix = prv_token_text + " "+ token.text
+        if prev_token_dep == "compound":
+          prefix = prev_token_text + " "+ token.text
 
       if token.dep_.endswith("mod") == True:
         modifier = token.text
-        if prv_token_dep == "compound":
-          modifier = prv_token_text + " "+ token.text
+        if prev_token_dep == "compound":
+          modifier = prev_token_text + " "+ token.text
 
       if token.dep_.find("subj") == True:
         ent1 = modifier +" "+ prefix + " "+ token.text
         prefix = ""
         modifier = ""
-        prv_token_dep = ""
-        prv_token_text = ""
+        prev_token_dep = ""
+        prev_token_text = ""
 
       if token.dep_.find("obj") == True:
         ent2 = modifier +" "+ prefix +" "+ token.text
 
-      prv_token_dep = token.dep_
-      prv_token_text = token.text
+      prev_token_dep = token.dep_
+      prev_token_text = token.text
 
   return [ent1.strip(), ent2.strip()]
 
@@ -99,5 +99,5 @@ def cleanup_text(docs, logging=False):
         tokens = ' '.join(tokens)
 
         texts.append(tokens)
-        
+
     return pd.Series(texts)
