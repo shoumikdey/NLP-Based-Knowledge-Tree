@@ -2,6 +2,9 @@ import spacy
 nlp = spacy.load('en_core_web_sm')
 from spacy.matcher import Matcher, PhraseMatcher
 from spacy.tokens import Span
+import string
+from nltk.corpus import stopwords
+import pandas as pd
 
 def phrase_template():
     phrases = ["emergency", "non-normal", " Federal Aviation Administration", "FAA", "Handbook", "emergency landings",
@@ -95,3 +98,17 @@ def get_relation(sent):
         #print(type(span))
 
     return(span.text)
+
+def cleanup_text(docs, logging=False):
+    texts = []
+    counter = 1
+    for doc in docs:
+        if counter % 1000 == 0 and logging:
+            print("Processed %d out of %d documents." % (counter, len(docs)))
+        counter += 1
+        doc = nlp(doc, disable=['parser', 'ner'])
+        tokens = [tok.lemma_.lower().strip() for tok in doc if tok.lemma_ != '-PRON-']
+        tokens = [tok for tok in tokens if tok not in stopwords.words('english') and tok not in string.punctuation]
+        tokens = ' '.join(tokens)
+        texts.append(tokens)
+    return pd.Series(texts)

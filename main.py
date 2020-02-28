@@ -47,6 +47,7 @@ sentences[0].shape
 #   print(tok.text, "...", tok.dep_)
 # exit(0)
 
+sentences[0] = cleanup_text(sentences[0])
 
 sub_obj = []
 for i in tqdm(sentences[0]):
