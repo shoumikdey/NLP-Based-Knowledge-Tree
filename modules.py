@@ -17,7 +17,8 @@ def phrase_template():
                 "Inadvertent VFR Flight into IMC", "VFR Flight",  "VFR", "control", "maintaining", "airplane control", "maintaining airplane control",
                 "attitude", "attitude indicator", "attitude control", "turns", "spiral", "graveyard spiral", "instabaility", "steep", "banks", "steep banks", "climbs", "descents", "maneuvers", "visual flight",
                 "extend", "retract", "extension", "retraction", "non-instrument-rated", "pilot", "psychological hazards", "nose", "flying speed", "landing area", "throttle", "runway", "minimum", "touchdown", "glide",
-                ]
+                "damage", "groundspeed", "wind", "deceleration", "hydraulics", "hydraulic", "door", "opening", "spiral", "descent", "EFIS", "avionics", "IFR", "propellor", "thrust", "oil temperature", "oil pressure", "fuel pressure",
+                "displays", "flight display", "cowl", "stall", "stall warning", "stall warning horn", "engines"]
     return phrases
 
 
