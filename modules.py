@@ -67,48 +67,37 @@ def entity_pair(sent):
 def get_relation(sent):
     doc = nlp(sent)
 
-    # matcher = Matcher(nlp.vocab)
-    #
-    # pattern = [{'DEP':'ROOT'},
-    #             {'DEP':'prep','OP':"?"},
-    #             {'DEP':'agent','OP':"?"},
-    #             {'POS':'ADJ','OP':"?"}]
-
     matcher = PhraseMatcher(nlp.vocab)
     pattern = list(nlp.tokenizer.pipe(phrase_template()))
-    # pattern = [{'DEP':'nummod','OP':"?"},
-    #        {'DEP':'amod','OP':"?"},
-    #        {'POS':'NOUN'},
-    #        {'IS_PUNCT':True},
-    #        {'LOWER': 'especially'},
-    #        {'DEP':'nummod','OP':"?"},
-    #        {'DEP':'amod','OP':"?"},
-    #        {'POS':'NOUN'}]
+
     matcher.add("matching_1", None, *pattern)
 
     matches = matcher(doc)
     k = len(matches) - 1
-    #
-    #
-    # print(len(matches))
-    #span = doc[matches[0][1]:matches[0][2]]
+
     span = doc
     for match_id, start, end in matches:
         span = doc[start:end]
-        #print(type(span))
+
 
     return(span.text)
 
 def cleanup_text(docs, logging=False):
     texts = []
     counter = 1
+
     for doc in docs:
+
         if counter % 1000 == 0 and logging:
             print("Processed %d out of %d documents." % (counter, len(docs)))
+
         counter += 1
         doc = nlp(doc, disable=['parser', 'ner'])
+
         tokens = [tok.lemma_.lower().strip() for tok in doc if tok.lemma_ != '-PRON-']
         tokens = [tok for tok in tokens if tok not in stopwords.words('english') and tok not in string.punctuation]
         tokens = ' '.join(tokens)
+
         texts.append(tokens)
+        
     return pd.Series(texts)
