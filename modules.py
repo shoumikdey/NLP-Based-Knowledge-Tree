@@ -33,9 +33,9 @@ def phrase_template():
 
 def entity_pair(sent):
 
-    '''
-    The subject and the object is extracted from the sentence passed into the function.
-    '''
+  '''
+  The subject and the object is extracted from the sentence passed into the function.
+  '''
   ent1 = ""
   ent2 = ""
 
