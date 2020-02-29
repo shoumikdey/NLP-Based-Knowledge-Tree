@@ -74,7 +74,7 @@ def main():
     print()
     print("Enter the name of the system")
     print("Example inputs: 'engine', 'fire', 'flap', 'electrical', 'fuel', 'gear'")
-    inp = input("just press enter to display the full graph: ")
+    inp = input("just press enter to display the full graph: ").lower()
     if inp != "":
         kg_df = kg_df[kg_df['edge']==str(inp)]
     print(kg_df)
