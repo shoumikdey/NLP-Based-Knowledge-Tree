@@ -26,6 +26,8 @@ def main():
     pd.set_option('display.max_colwidth', 200)
     file = os.listdir("test_data"+os.sep)
     file = list(filter(lambda x: x[-4:] == '.pdf', file))
+    if not file:
+        exit("No PDF found !")
     parsedPDF = parser.from_file("test_data"+os.sep+str(file[0]))
 
     '''
